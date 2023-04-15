@@ -39,3 +39,15 @@ class Entity:
 	def move(self, dx: int, dy: int):
 		self.x += dx
 		self.y += dy
+		
+	# Added by BYF
+	def seek(self, entity: Entity)
+		dx, dy = 0, 0
+		if entity.x < self.x:
+			dx = -1
+		if entity.x > self.x:
+			dx = 1
+		if entity.y < self.y:
+			dy = -1
+		if entity.y > self.y:
+			dy = 1
