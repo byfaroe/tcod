@@ -18,7 +18,9 @@ class Engine:
 	
 	def handle_enemy_turns(self) -> None:
 		for entity in self.game_map.entities - {self.player}:
-			print(f'The {entity.name} wonders when it will get to take a real turn.') 
+			#print(f'The {entity.name} wonders when it will get to take a real turn.') 
+			if entity.name == "Bunny":
+				entity.seek(self.player)
 		
 	def handle_events(self, events: Iterable[Any]) -> None:
 		for event in events:

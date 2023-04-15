@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import copy
+import random
 from typing import Tuple, TypeVar, TYPE_CHECKING
 
 if TYPE_CHECKING:
@@ -41,7 +42,7 @@ class Entity:
 		self.y += dy
 		
 	# Added by BYF
-	def seek(self, entity: Entity)
+	def seek(self, entity: Entity):
 		dx, dy = 0, 0
 		if entity.x < self.x:
 			dx = -1
@@ -51,3 +52,6 @@ class Entity:
 			dy = -1
 		if entity.y > self.y:
 			dy = 1
+		for i in range(random.randint(0, 2 if abs(entity.x-self.x) > 1 and abs(entity.y-self.y) > 1 else 1)): # If beside entity, move 0-1, else move 0-2
+			self.move(dx, dy)
+			

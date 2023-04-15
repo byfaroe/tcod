@@ -41,7 +41,7 @@ class MeleeAction(ActionWithDirection):
 		target = engine.game_map.get_blocking_entity_at_location(dest_x, dest_y)
 		if not target:
 			return  # No entity to attack
-		print(f"You kick the {target.name}, much to its annoyance!")
+		print(f"You pet the {target.name}, much to its {'delight' if target.name=='Bunny' else 'annoyance'}!")
 
 class MovementAction(ActionWithDirection):
 
@@ -59,6 +59,7 @@ class MovementAction(ActionWithDirection):
 		entity.move(self.dx, self.dy)
 		
 class BumpAction(ActionWithDirection):
+
 	def perform(self, engine: Engine, entity: Entity) -> None:
 		dest_x = entity.x + self.dx
 		dest_y = entity.y + self.dy

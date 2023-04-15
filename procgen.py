@@ -48,7 +48,7 @@ def place_entities(
 		maximum_monsters: int
 	) -> None:
 	number_of_monsters = random.randint(0, maximum_monsters)
-	
+		
 	for i in range(number_of_monsters):
 		x = random.randint(room.x1 + 1, room.x2 - 1)
 		y = random.randint(room.y1 + 1, room.y2 - 1)
@@ -93,6 +93,8 @@ def generate_dungeon(
 	
 	rooms: list[RectangularRoom] = []
 	
+	bunnies = 0  # Count of bunnies — Added by BYF
+	
 	for r in range(max_rooms):
 		room_width = random.randint(room_min_size, room_max_size)
 		room_height = random.randint(room_min_size, room_max_size)
@@ -115,6 +117,12 @@ def generate_dungeon(
 			# Dig out a tunnel between this room and previous
 			for x, y in tunnel_between(rooms[-1].center, new_room.center):
 				dungeon.tiles[x, y] = tile_types.floor
+		
+		if bunnies == 0 and random.random() <= 0.3:
+			x = random.randint(new_room.x1 + 1, new_room.x2 - 1)
+			y = random.randint(new_room.y1 + 1, new_room.y2 - 1)
+			entity_factories.bunny.spawn(dungeon, x, y)
+			bunnies += 1
 		
 		place_entities(new_room, dungeon, max_monsters_per_room)
 		
