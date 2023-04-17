@@ -54,8 +54,8 @@ def main():
 		map_width=map_width,
 		map_height=map_height,
 		max_monsters_per_room=max_monsters_per_room,
-		engine-engine,
-		player=player
+		engine=engine,
+#		player=player
 	)
 	engine.update_fov()
 		

@@ -33,17 +33,23 @@ class EscapeAction(Action):
 	def perform(self) -> None:
 		raise SystemExit()
 
+
+class WaitAction(Action):
+	def perform(self) -> None:
+		pass
+
+
 class ActionWithDirection(Action):
 	def __init__(self, entity: Entity, dx: int, dy: int):
-		super().__init__()
+		super().__init__(entity)
 		
 		self.dx = dx
 		self.dy = dy
 		
 	@property
 	def dest_xy(self) -> Tuple[int, int]:
-	"""Returns this action's destination."""
-	return self.entity.x + self.dx, self.entity.y + self.dy
+		"""Returns this action's destination."""
+		return self.entity.x + self.dx, self.entity.y + self.dy
 	
 	@property
 	def blocking_entity(self) -> Optional[Entity]:
@@ -54,15 +60,15 @@ class ActionWithDirection(Action):
 		raise NotImplementedError()
 
 class MeleeAction(ActionWithDirection):
-	def perform(self, engine: Engine, entity: Entity) -> None:
-
+	def perform(self) -> None:
 		target = self.blocking_entity
+
 		if not target:
 			return  # No entity to attack
+
 		print(f"You kick the {target.name}, much to its annoyance!")
 
 class MovementAction(ActionWithDirection):
-
 	def perform(self) -> None:
 		dest_x, dest_y = self.dest_xy
 		
@@ -74,11 +80,11 @@ class MovementAction(ActionWithDirection):
 			return  # Destination is blocked by an entity
 		
 		self.entity.move(self.dx, self.dy)
-		
+
 class BumpAction(ActionWithDirection):
 	def perform(self) -> None:
 		if self.blocking_entity:
-			return MeleeAction(self.dx, self.dy).perform()
+			return MeleeAction(self.entity, self.dx, self.dy).perform()
 		
 		else:
-			return MovementAction(self.dx, self.dy).perform()
+			return MovementAction(self.entity, self.dx, self.dy).perform()
