@@ -32,17 +32,22 @@ class Engine:
 				entity.ai.perform()
 		
 	
-	def update_fov(self) -> None:
+	def update_fov(
+		self,
+#		fov_radius=8,
+#		daylight=False  # BYF - If daylight, full map is explored - TODO: Cut this or develop - idea is day/night switch cd reveal/hide map or similar
+	) -> None:
 		"""Recompute the visible area based on the player's point of view"""
+#		if daylight:
 		self.game_map.visible[:] = compute_fov(
 			self.game_map.tiles["transparent"],
 			(self.player.x, self.player.y),
-			radius=8,
+#			effective_radius
 		)
 		# If a tile is "visible" it should be added to "explored"
 		self.game_map.explored |= self.game_map.visible
-
-
+	
+	
 	def render(self, console: Console) -> None:
 		self.game_map.render(console)
 

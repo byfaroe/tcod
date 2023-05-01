@@ -14,18 +14,28 @@ if TYPE_CHECKING:
 
 class GameMap:
 	def __init__(
-		self, engine: Engine, width: int, height: int, entities: Iterable[Entity] = ()
+		self, 
+		engine: Engine, 
+		width: int, 
+		height: int, 
+		entities: Iterable[Entity] = (),
+		outdoor: bool = False
 	):
 		self.engine = engine
 		self.width, self.height = width, height
 		self.entities = set(entities)
-		self.tiles = np.full((width, height), fill_value=tile_types.wall, order="F")
+		self.outdoor = outdoor
+		
+		if self.outdoor:
+			self.tiles = np.full((width, height), fill_value=tile_types.floor, order="F")
+		else:
+			self.tiles = np.full((width, height), fill_value=tile_types.wall, order="F")
 		
 		self.visible = np.full(
 			(width, height), fill_value=False, order="F"
 		)  # Tiles the player can currently see
 		self.explored = np.full(
-			(width, height), fill_value=False, order="F"
+			(width, height), fill_value=outdoor, order="F"  # If outdoor, full map is revealed at start
 		)  # Tiles the player has seen before
 	
 	@property

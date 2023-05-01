@@ -25,7 +25,7 @@ import tcod
 import color
 from engine import Engine
 import entity_factories
-from procgen import generate_dungeon
+from procgen import generate_dungeon, generate_field
 
 def main():
 	screen_width = 80
@@ -48,16 +48,26 @@ def main():
 	
 	engine = Engine(player=player)
 	
-	engine.game_map = generate_dungeon(
-		max_rooms=max_rooms,
-		room_min_size=room_min_size,
-		room_max_size=room_max_size,
+	# engine.game_map = generate_dungeon(
+		# max_rooms=max_rooms,
+		# room_min_size=room_min_size,
+		# room_max_size=room_max_size,
+		# map_width=map_width,
+		# map_height=map_height,
+		# max_monsters_per_room=max_monsters_per_room,
+		# engine=engine,
+# #		player=player
+	# )
+
+	outdoor=True
+	engine.game_map = generate_field(
 		map_width=map_width,
 		map_height=map_height,
-		max_monsters_per_room=max_monsters_per_room,
+		min_entities=3,
+		max_entities=5,
 		engine=engine,
-#		player=player
 	)
+	
 	engine.update_fov()
 	
 	engine.message_log.add_message(

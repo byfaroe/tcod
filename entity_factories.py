@@ -27,8 +27,8 @@ troll = Actor(
 
 
 gnome = Actor(
-	char="ô", 
-	color=(27, 240, 200), 
+	char="o", #"ô", 
+	color=(255, 255, 255), 	# color=(27, 240, 200), 
 	name="Gnome",
 	ai_cls=HostileEnemy,
 	fighter=Fighter(hp=10, defense=0, power=3)
